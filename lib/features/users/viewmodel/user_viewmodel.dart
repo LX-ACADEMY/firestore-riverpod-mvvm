@@ -53,7 +53,9 @@ class UserViewmodel extends _$UserViewmodel {
   Future<void> saveUser() async {
     try {
       state = state.copyWith(isLoading: true);
-      await FirestoreService.saveUser(state.user);
+      await FirestoreService.saveUser(state.user.copyWith(
+        id: DateTime.now().microsecondsSinceEpoch.toString(),
+      ));
       state = state.copyWith(isLoading: false);
     } catch (e) {
       state = state.copyWith(
